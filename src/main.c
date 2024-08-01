@@ -5,44 +5,81 @@
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
+bool is_game_running = false;
 
-int init_window() {
+struct wall {
+  float x;
+  float y;
+  float width;
+  float height;
+} wall;
+
+bool init_window() {
   g_log_debug("initializing window.");
   window = SDL_CreateWindow("Envy", SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
   if (!window) {
     g_log_error("SDL Window failed to create.");
-    return 1;
+    return false;
   }
 
   g_log_debug("initializing renderer");
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (!renderer) {
     g_log_error("SDL Renderer failed to create render.");
-    return 1;
+    return false;
   }
 
-  bool running = true;
-  while (running) {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-      switch (event.type) {
-      case SDL_QUIT:
-        g_log_debug("Attempted to close Envy Engine.");
-        running = false;
-        break;
-      default:
-        break;
-      }
-    }
+  g_log_success("Window and Renderers were initialized.");
+  return true;
+}
 
-    SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-    SDL_RenderClear(renderer);
+void setup() {
+  wall.x = WIDTH / 2;
+  wall.y = HEIGHT / 2;
+  wall.width = 100;
+  wall.height = 50;
+}
 
-    SDL_RenderPresent(renderer);
+void process_input() {
+  SDL_Event event;
+  SDL_PollEvent(&event);
+
+  switch (event.type) {
+  case SDL_QUIT:
+    is_game_running = false;
+    break;
+  default:
+    break;
   }
+};
 
-  return 0;
+void update() {};
+
+void render() {
+  g_log_debug("Rendering on screen.");
+  SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+  SDL_RenderClear(renderer);
+
+  /* Start to render game objects */
+  /* ----------------------------- */
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  SDL_Rect wall_rect = {
+      wall.x,
+      wall.y,
+      wall.width,
+      wall.height,
+  };
+
+  SDL_RenderFillRect(renderer, &wall_rect);
+
+  SDL_RenderPresent(renderer);
+};
+
+void destroy_window() {
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
 }
 
 int main(int argc, char *argv[]) {
@@ -51,7 +88,16 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  init_window();
-  g_log_success("Envy closed.");
+  is_game_running = init_window();
+
+  setup();
+
+  while (is_game_running) {
+    process_input();
+    update();
+    render();
+  }
+
+  g_log_debug("Envy closed.");
   return 0;
 }
