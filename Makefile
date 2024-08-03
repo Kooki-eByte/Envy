@@ -11,13 +11,16 @@ LDLIBS = -lgreed $(SDL_LIBS)
 INCFLAGS = -I./include -I../Greed/include $(SDL_CFLAGS)
 TARGET = envy
 
+SRC = ./src/main.c ./src/render/e_render.c
+OBJ = $(SRC:.c=.o)
+
 all: $(TARGET)
 
-$(TARGET): main.o
+$(TARGET): $(OBJ)
 	$(CC) -std=$(VERSION) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-main.o: src/main.c
-	$(CC) -std=$(VERSION) $(CFLAGS) $(INCFLAGS) -c $^
+%.o: %.c
+	$(CC) -std=$(VERSION) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o
+	rm -f *.o $(TARGET)
