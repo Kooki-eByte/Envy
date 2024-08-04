@@ -63,13 +63,13 @@ int main(int argc, char *argv[]) {
     e_update();
     e_render();
 
-    uint32 delta = SDL_GetTicks() - current_time;
+    uint32 end_time = SDL_GetTicks() - current_time;
 
-    if (delta < FRAME_TARGET_TIME) {
-      SDL_Delay(FRAME_TARGET_TIME - delta);
+    if (FRAME_TARGET_TIME > end_time) {
+      SDL_Delay(FRAME_TARGET_TIME - end_time);
     }
 
-    printf("FPS: %f\n", ((f32)FRAME_TARGET_TIME - (f32)delta) * 4);
+    printf("FPS: %f\n", ((f32)FRAME_TARGET_TIME - (f32)end_time));
   }
 
   g_log_debug("Envy closed.");
