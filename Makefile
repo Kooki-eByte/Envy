@@ -11,7 +11,7 @@ LDLIBS = -lgreed $(SDL_LIBS)
 INCFLAGS = -I./include -I../Greed/include $(SDL_CFLAGS)
 TARGET = envy
 
-SRC = ./src/main.c ./src/render/e_render.c
+SRC = ./src/main.c ./src/render/e_render.c ./src/inputProcess/e_process_input.c
 OBJ = $(SRC:.c=.o)
 
 all: $(TARGET)

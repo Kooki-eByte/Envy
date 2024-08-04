@@ -14,18 +14,23 @@
 
 #ifndef ENVY_ENGINE
 #define ENVY_ENGINE
+extern bool is_game_running;
 extern bool e_init_window(void);
 extern void e_setup(void);
 /* Envy Gameloop */
 /* ------------- */
-/* Envy User Input Process */
-/* ----------------------- */
-extern void e_process_input(void);
 
 /* Envy Update */
 /* ----------- */
 extern void e_update(void);
 extern void e_destroy_window(void);
+#endif
+
+/* Envy User Input Process */
+/* ----------------------- */
+#ifndef ENVY_PROCESS_INPUT
+#define ENVY_PROCESS_INPUT
+extern void e_process_input(void);
 #endif
 
 /* Envy Renderer */
