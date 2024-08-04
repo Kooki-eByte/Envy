@@ -1,5 +1,5 @@
 #define ENVY_ENGINE
-#include "../include/envy.h"
+#include "../include/envy_engine.h"
 
 SDL_Window *window = NULL;
 bool is_game_running = false;
@@ -56,9 +56,20 @@ int main(int argc, char *argv[]) {
   e_setup();
 
   while (is_game_running) {
+    /* Framerate */
+    uint32 current_time = SDL_GetTicks();
+
     e_process_input();
     e_update();
     e_render();
+
+    uint32 delta = SDL_GetTicks() - current_time;
+
+    if (delta < FRAME_TARGET_TIME) {
+      SDL_Delay(FRAME_TARGET_TIME - delta);
+    }
+
+    printf("FPS: %f\n", ((f32)FRAME_TARGET_TIME - (f32)delta) * 4);
   }
 
   g_log_debug("Envy closed.");

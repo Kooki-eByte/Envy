@@ -1,4 +1,4 @@
-#include "../../include/envy.h"
+#include "../../include/envy_engine.h"
 
 SDL_Renderer *e_renderer = NULL;
 
@@ -23,12 +23,11 @@ bool e_render_init(SDL_Window *window) {
 }
 
 void e_render(void) {
-  g_log_debug("Rendering on screen.");
   SDL_SetRenderDrawColor(e_renderer, 255, 0, 255, 255);
   SDL_RenderClear(e_renderer);
 
-  wall.x = (WIDTH / 2) + 100;
-  wall.y = (HEIGHT / 2) + 50;
+  wall.x = (WIDTH / 2) - 100;
+  wall.y = (HEIGHT / 2) - 50;
   wall.width = 200;
   wall.height = 100;
   /* Start to render game objects */
