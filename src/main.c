@@ -5,6 +5,10 @@ SDL_Window *window = NULL;
 
 bool is_game_running = false;
 
+vec2 p;
+vec2 s;
+vec4 c;
+
 bool e_init_window(void) {
   g_log_debug("initializing window.");
   window = SDL_CreateWindow("Envy", SDL_WINDOWPOS_CENTERED,
@@ -23,9 +27,24 @@ bool e_init_window(void) {
   return true;
 }
 
-void e_setup(void) {}
+void e_setup(void) {
+  p.x = (WIDTH / 2) - 100;
+  p.y = (HEIGHT / 2) - 50;
 
-void e_update(void) {};
+  s.x = 200;
+  s.y = 100;
+
+  c.x = 255;
+  c.y = 255;
+  c.z = 255;
+  c.w = 255;
+}
+
+void e_update(void) {
+  e_render_quad(p, s, c);
+  p.x++;
+  p.y++;
+};
 
 void e_destroy_window(void) {
   SDL_DestroyRenderer(e_renderer);

@@ -7,6 +7,7 @@
 #define SDL_MAIN_HANDLED
 
 #include "greed.h"
+#include "sloth.h"
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <stdbool.h>
@@ -40,6 +41,7 @@ extern void e_process_input(void);
 extern SDL_Renderer *e_renderer;
 extern bool e_render_init(SDL_Window *window);
 extern void e_render(void);
+extern void e_render_quad(vec2, vec2, vec4);
 /* ------------- */
 #endif
 #endif
