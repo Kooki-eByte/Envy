@@ -5,9 +5,9 @@ SDL_Window *window = NULL;
 
 bool is_game_running = false;
 
-vec2 p;
-vec2 s;
-vec4 c;
+struct Vec2 p = {(WIDTH / 2) - 100, (HEIGHT / 2) - 50};
+struct Vec2 s = {200, 100};
+struct Vec4 c = {255, 255, 255, 255};
 
 bool e_init_window(void) {
   g_log_debug("initializing window.");
@@ -27,21 +27,10 @@ bool e_init_window(void) {
   return true;
 }
 
-void e_setup(void) {
-  p.x = (WIDTH / 2) - 100;
-  p.y = (HEIGHT / 2) - 50;
-
-  s.x = 200;
-  s.y = 100;
-
-  c.x = 255;
-  c.y = 255;
-  c.z = 255;
-  c.w = 255;
-}
+void e_setup(void) {}
 
 void e_update(void) {
-  e_render_quad(p, s, c);
+  e_render_quad(&p, &s, &c);
   p.x++;
   p.y++;
 };
