@@ -1,5 +1,6 @@
 #ifndef ENVY_MAIN
 #define ENVY_MAIN
+#include <vcruntime.h>
 #define WIDTH 1280
 #define HEIGHT 720
 #define FPS 60
@@ -38,10 +39,20 @@ extern void e_process_input(void);
 /* ------------- */
 #ifndef ENVY_RENDER
 #define ENVY_RENDER
+
+typedef struct Triangle {
+  Vec3 p[3];
+} Triangle;
+
+typedef struct Mesh {
+  Triangle *tris; // Dynamic Array for amount of triangles.
+  size_t numTris;
+} Mesh;
+
 extern SDL_Renderer *e_renderer;
 extern bool e_render_init(SDL_Window *window);
 extern void e_render(void);
-extern void e_render_quad(vec2, vec2, vec4);
+extern void e_render_quad(Vec2 *pos, Vec2 *size, Vec4 *color);
 /* ------------- */
 #endif
 #endif
